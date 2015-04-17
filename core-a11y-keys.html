@@ -94,7 +94,7 @@ Fired when a keycombo in `keys` is pressed.
   }
 </style>
 
-<polymer-element name="core-a11y-keys">
+<dom-module id="core-a11y-keys">
 <script>
   (function() {
     /*
@@ -271,7 +271,7 @@ Fired when a keycombo in `keys` is pressed.
     }
 
     function processKeys(ev) {
-      var current = keyboardEventToKey(ev);
+      var current = keyboardEventToKey(Polymer.dom(ev));
       for (var i = 0, dk; i < this._desiredKeys.length; i++) {
         dk = this._desiredKeys[i];
         if (keyMatches(dk, current)) {
@@ -295,7 +295,8 @@ Fired when a keycombo in `keys` is pressed.
       }
     }
 
-    Polymer('core-a11y-keys', {
+    Polymer({
+      is: 'core-a11y-keys',
       created: function() {
         this._keyHandler = processKeys.bind(this);
       },
@@ -339,4 +340,4 @@ Fired when a keycombo in `keys` is pressed.
     });
   })();
 </script>
-</polymer-element>
+</dom-module>
