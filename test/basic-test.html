@@ -35,7 +35,7 @@
       });
 
       // asyncPlatformFlush = (fn) => { Polymer.flush(); requestAnimationFrame(() => requestAnimationFrame(fn)) };
-      asyncPlatformFlush = function(fn) {Polymer.flush(); requestAnimationFrame(function(){requestAnimationFrame(function() {fn()}) });};
+       asyncPlatformFlush = function(fn) {Polymer.dom.flush(); requestAnimationFrame(function(){requestAnimationFrame(function() {fn()}) });};
 
       suite('keys attribute', function() {
         test('keys attribute sets up _desiredKeys', function(done) {
@@ -70,7 +70,7 @@
 
       suite('event listeners', function() {
         var listeners = false;
-        var proto = el.__proto__;
+        var proto = document.body;
 
         var origAEL, origREL;
 
@@ -89,7 +89,7 @@
         test('event listeners only active when in document', function(done) {
           var local = document.createElement('core-a11y-keys');
           assert.equal(listeners, false);
-          document.body.appendChild(local);
+          Polymer.dom(document.body).appendChild(local);
           async.series([
             asyncPlatformFlush,
             function(cb) {
@@ -98,7 +98,7 @@
             },
             asyncPlatformFlush,
             function(cb) {
-              local.parentNode.removeChild(local);
+              Polymer.dom(local.parentNode).removeChild(local);
               cb();
             },
             asyncPlatformFlush,

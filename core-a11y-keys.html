@@ -309,7 +309,7 @@ Fired when a keycombo in `keys` is pressed.
       detached: function() {
         unlisten(this.target, this._keyHandler);
       },
-      publish: {
+      properties: {
         /**
          * The set of key combinations that will be matched (in keys syntax).
          *
@@ -317,7 +317,11 @@ Fired when a keycombo in `keys` is pressed.
          * @type string
          * @default ''
          */
-        keys: '',
+        keys: {
+            type: String,
+            value: '',
+            observer: 'keysChanged'
+        },
         /**
          * The node that will fire keyboard events.
          * Default to this element's parentNode unless one is assigned
@@ -326,7 +330,11 @@ Fired when a keycombo in `keys` is pressed.
          * @type Node
          * @default this.parentNode
          */
-        target: null
+        target: {
+            type: Object,
+            value: null,
+            observer: 'targetChanged'
+        }
       },
       keysChanged: function() {
         // * can have multiple mappings: shift+8, * on numpad or Multiply on numpad
